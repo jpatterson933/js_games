@@ -11,7 +11,7 @@
 .cards {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     text-align: center;
     margin: 1em;
     width: 250px;

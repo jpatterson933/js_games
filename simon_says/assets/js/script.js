@@ -19,6 +19,8 @@ const onCardClick = (event) => {
     let parentEle = event.target.parentElement;
     console.log(parentEle.dataset.word)
     if(parentEle.dataset.solution === "correct") {
+
+
         element.style.backgroundColor = parentEle.dataset.word;
         parentEle.style.boxShadow = `0px 0px 6px 2px white, 0px 0px 12px 5px ${parentEle.dataset.word}`
         element.style.border = `3px solid ${parentEle.dataset.word}`
@@ -45,10 +47,13 @@ const singleCardElement = (parentElement, index) => {
     cardContainer.setAttribute("id", index)
     cardBody.setAttribute("class", "cards-body")
     cardBody.style.cursor = "pointer";
+    cardBody.style.margin = "0";
+    cardBody.style.padding = "0";
 
-    cardBody.textContent = "testing"
+    cardBody.textContent = "Get ready!"
 
-    cardBody.addEventListener("click", onCardClick)
+        cardBody.addEventListener("click", onCardClick) // need to have this only take affect when the game starts or the ingameprogress is true
+
 
     cardContainer.appendChild(cardBody);
     parentElement.appendChild(cardContainer);
@@ -108,6 +113,20 @@ const checkColors = () => {
     let cardsBody = document.querySelectorAll('.cards-body');
 
     for(let i = 0; i < cards.length; i++){
+        cards[i].addEventListener("click", () => {
+
+            if(cards[i].dataset.solution === "correct") {
+                let addScore = document.createElement("p");
+                addScore.textContent = "+1";
+                addScore.style.fontSize = "2em";
+                addScore.style.margin = "0";
+                addScore.style.padding = "0";
+                cards[i].append(addScore)
+            }
+        })
+        // cards[i].on("click", function() {
+        //     console.log("testing")
+        // })
         // cards[i].getAttribute()
 
     }
@@ -120,6 +139,8 @@ const startGame = () => {
     buttonVisibility("hidden", 0); // immediately hide button
 
     assignColors();
+
+    checkColors();
 
 
 }
