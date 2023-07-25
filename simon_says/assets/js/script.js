@@ -134,11 +134,13 @@ const assignColors = () => {
         
         let randomColor = getRandomIndex(colors.length);
         let randomText = getRandomIndex(colors.length);
+
         card.style.backgroundColor = colors[randomColor];
         card.setAttribute("data-background", colors[randomColor]);
+        card.setAttribute("data-word", colors[randomText]);
+
         cardBody.textContent = colors[randomText];
         cardBody.style.cursor = "pointer";
-        card.setAttribute("data-word", colors[randomText]);
         
         if (card.dataset.word === card.dataset.background) {
             card.setAttribute("data-solution", "correct");
@@ -150,29 +152,38 @@ const assignColors = () => {
     });
 };
 
+function styleCardScore(score){
+    score.style.fontSize = "2em";
+    score.style.margin = "0";
+    score.style.padding = "0";
+};
+
+function grabAllElements(element){
+    let elementArray = document.querySelectorAll(element);
+    return elementArray;
+}
 const clickHandler = (event) => {
-    let cards = document.querySelectorAll('.cards');
-    let cardsBody = document.querySelectorAll('.cards-body');
+    let cards = grabAllElements('.cards');
+    let cardsBody = grabAllElements('.cards-body');
     let cardIndex = Array.from(cardsBody).indexOf(event.currentTarget);
     console.log(cardIndex);
     if (cards[cardIndex].dataset.solution === "correct") {
-        let addScore = document.createElement("p");
-        addScore.textContent = "+1";
+        let cardScoreEle = document.createElement("p");
+        cardScoreEle.textContent = "+1";
+
         increaseScore(); // updates our score
-        addScore.style.fontSize = "2em";
-        addScore.style.margin = "0";
-        addScore.style.padding = "0";
-        cardsBody[cardIndex].append(addScore);
+        styleCardScore(cardScoreEle)
+
+        cardsBody[cardIndex].append(cardScoreEle);
         cardsBody[cardIndex].removeEventListener("click", clickHandler);
 
     } else if (cards[cardIndex].dataset.solution === "incorrect") {
-        let addScore = document.createElement("p");
-        addScore.textContent = "-1";
+        let cardScoreEle = document.createElement("p");
+        cardScoreEle.textContent = "-1";
         decreaseScore(); // updates our score
-        addScore.style.fontSize = "2em";
-        addScore.style.margin = "0";
-        addScore.style.padding = "0";
-        cardsBody[cardIndex].append(addScore);
+        styleCardScore(cardScoreEle)
+
+        cardsBody[cardIndex].append(cardScoreEle);
         cardsBody[cardIndex].removeEventListener("click", clickHandler);
     }
 }
