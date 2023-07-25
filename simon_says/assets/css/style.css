@@ -8,6 +8,11 @@
     margin: 1em;
 }
 
+#score-panel{
+    display: flex;
+    flex-direction: column;
+}
+
 .cards {
     display: flex;
     flex-direction: column;
